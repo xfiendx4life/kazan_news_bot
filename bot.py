@@ -3,6 +3,7 @@ import config
 import telebot
 from telebot import types
 import os
+from get_data import * 
 
 bot = telebot.TeleBot(config.token)
 day = ''
@@ -15,7 +16,8 @@ def handle_start(message):
 @bot.message_handler(func=lambda message: True)
 def handle_message(message):
     #markup = types.ForceReply(selective=False)
-    bot.send_message(message.chat.id, 'Пока работаем над вашими новостями')
+    message_ = message_maker()
+    bot.send_message(message.chat.id, message_)
 
 
 
