@@ -1,20 +1,20 @@
 # -*- coding: utf-8 -*-
 import requests
 import xml.etree.ElementTree as ET
+from datetime import datetime
 
-def get_xml():
-    r = requests.get('http://sntat.ru/rss/yandex_news.xml')
-    r.encoding = 'utf-8'
+def get_xml(url, encoding):
+    r = requests.get(url)
+    r.encoding = encoding
     return r.text
 
-def parse_xml():
-    text = get_xml()
+def parse_xml(text):
     root = ET.fromstring(text)
     return root
 
 
 def make_news_list():
-    root = parse_xml()
+    root = parse_xml(get_xml('http://sntat.ru/rss/yandex_news.xml', 'utf-8'))
     news = []
     for child in root[0]:
         if child.tag.split("}")[1] == 'item':
@@ -32,4 +32,16 @@ def make_news_list():
             news.append(news_dict)
     return news
 
+def get_valCodes(root):
+    code_list = {}
+    for item in root:
+        if item[1].text == 'US Dollar':
+            code_list['US Dollar'] = item.attrib['ID']
+        elif item[1].text == 'Euro':
+            code_list['EURO'] = item.attrib['ID']
+    return code_list
+            
 
+def get_ValCurs():
+    get_valCodes(parse_xml(get_xml('http://www.cbr.ru/scripts/XML_val.asp?d=0', 'cp1251')))
+    
