@@ -10,6 +10,11 @@ def get_xml():
 def parse_xml():
     text = get_xml()
     root = ET.fromstring(text)
+    return root
+
+
+def make_news_list():
+    root = parse_xml()
     news = []
     for child in root[0]:
         if child.tag.split("}")[1] == 'item':
