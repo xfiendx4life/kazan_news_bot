@@ -24,6 +24,9 @@ def handle_exchangerates(message):
     message_ = exchange_rates_message_maker()
     bot.send_message(message.chat.id, message_)
 
+@bot.message_handler(func=lambda message: True)
+def handle_plain_text(message):
+    bot.send_message(message.chat.id, 'Чтобы узнать новости, пользуйтесь командами /news или /exchangerate')
 
 
 if __name__ == '__main__':
