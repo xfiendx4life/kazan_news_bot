@@ -13,10 +13,15 @@ day = ''
 def handle_start(message):
     bot.send_message(message.chat.id, 'Хочешь немного новостей?')
 
-@bot.message_handler(func=lambda message: True)
-def handle_message(message):
+@bot.message_handler(commands=['news'])
+def handle_news(message):
     #markup = types.ForceReply(selective=False)
     message_ = message_maker()
+    bot.send_message(message.chat.id, message_)
+
+@bot.message_handler(commands=['exchangerate'])
+def handle_exchangerates(message):
+    message_ = exchange_rates_message_maker()
     bot.send_message(message.chat.id, message_)
 
 
