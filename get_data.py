@@ -61,7 +61,7 @@ def get_ValCurs(): #returns tuple (us_rate, eu_rate)
     if day.weekday() == 6:
         day -= timedelta(days=1)
     day = datetime.strftime(day, "%d.%m.%Y")
-    return get_rate(day, codes['US Dollar'],'Доллар США' ), get_rate(day, codes['EURO'], 'Евро')
+    return get_rate(day, codes['US Dollar'],'USD' ), get_rate(day, codes['EURO'], 'EUR')
     
         
 
