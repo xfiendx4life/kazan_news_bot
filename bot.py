@@ -3,7 +3,7 @@ import config
 import telebot
 from telebot import types
 import os
-from get_data import * 
+from newsmaker import * 
 
 bot = telebot.TeleBot(config.token)
 day = ''

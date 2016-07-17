@@ -27,9 +27,4 @@ def parse_xml():
             news.append(news_dict)
     return news
 
-def message_maker():
-    news = parse_xml()
-    message = 'Главные события на этот час: \n'
-    for i in range(5):
-        message += '%s \n (%s)' % (news[i]['title'],news[i]['link'])
-    return message
+
