@@ -2,6 +2,7 @@
 import requests
 import xml.etree.ElementTree as ET
 from datetime import datetime, timedelta
+import os
 
 def get_xml(url, encoding, payload=""):
     r = requests.get(url, params = payload)
@@ -64,5 +65,14 @@ def get_ValCurs(): #returns tuple (us_rate, eu_rate)
     return get_rate(day, codes['US Dollar'],'USD' ), get_rate(day, codes['EURO'], 'EUR')
     
         
-
+def check_news():
+    path = os.path.dirname(os.path.realpath(__file__))+ '\\cache.txt'
+    with open(path, 'r') as f:
+        read_data = f.read()
+    last_news  = make_news_list()[0]
+    if read_data !=  last_news['link']:
+        with open(path, 'w') as f:
+            f.write(last_news['link'])
+        return last_news
+    return None
     
