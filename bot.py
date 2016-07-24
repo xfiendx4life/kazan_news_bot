@@ -18,6 +18,7 @@ def handle_news(message):
     #markup = types.ForceReply(selective=False)
     message_ = message_maker()
     bot.send_message(message.chat.id, message_)
+    #print(message)
 
 @bot.message_handler(commands=['exchangerate'])
 def handle_exchangerates(message):
