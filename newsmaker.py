@@ -20,3 +20,10 @@ def exchange_rates_message_maker():#making exchange rates message
         message = 'Что-то пошло не так, попробуйте позже'
     return message
     
+def last_news_maker():
+    message = ''
+    last = check_news()
+    if last:
+        message += last['title'] + '\n\n' + last['link']
+        return message
+    return None
