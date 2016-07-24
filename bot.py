@@ -19,6 +19,9 @@ def handle_news(message):
     message_ = message_maker()
     bot.send_message(message.chat.id, message_)
     #print(message)
+    last = last_news_maker()
+    if last:
+        bot.send_message('@kazan_news_channel', last)
 
 @bot.message_handler(commands=['exchangerate'])
 def handle_exchangerates(message):
