@@ -7,7 +7,7 @@ from newsmaker import *
 
 bot = telebot.TeleBot(config.token)
 day = ''
-
+cat = False
 
 @bot.message_handler(commands=['start'])
 def handle_start(message):
@@ -22,14 +22,17 @@ def handle_cat(message):
     for item in cat_list:
         itembtn = types.KeyboardButton(item)
         markup.add(itembtn)
+    global cat
+    cat = True
     bot.send_message(message.chat.id, 'Выберите категорию' ,reply_markup=markup)
     
 @bot.message_handler(commands=['news'])
 def handle_news(message):
-    #markup = types.ForceReply(selective=False)
+    markup = types.ReplyKeyboardHide(selective=False)
     message_ = message_maker()
-    bot.send_message(message.chat.id, message_)
+    bot.send_message(message.chat.id, message_, reply_markup=markup)
     #print(message)
+
 
 @bot.message_handler(commands=['exchangerate'])
 def handle_exchangerates(message):
@@ -38,8 +41,15 @@ def handle_exchangerates(message):
 
 @bot.message_handler(func=lambda message: True)
 def handle_plain_text(message):
-    bot.send_message(message.chat.id, 'Чтобы узнать новости, пользуйтесь командами /news или /exchangerate')
-
+    markup = types.ReplyKeyboardHide(selective=False)
+    global cat
+    if cat:
+        category = message.text
+        message_ = cat_news_maker(category)
+        bot.send_message(message.chat.id, message_, reply_markup=markup)
+    else:
+        bot.send_message(message.chat.id, 'Чтобы узнать новости, пользуйтесь командами /news или /exchangerate', reply_markup=markup)
+    cat = False
 
 if __name__ == '__main__':
     try:
