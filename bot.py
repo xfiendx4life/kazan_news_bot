@@ -13,7 +13,7 @@ cat = False
 def handle_start(message):
     bot.send_message(message.chat.id, 'Хочешь немного новостей?')
 
-@bot.message_handler(regexp='cat')
+@bot.message_handler(commands=['category'])
 def handle_cat(message):
     cat_list = get_cat(make_news_list())
     markup = types.ReplyKeyboardMarkup(row_width = 1)
@@ -48,7 +48,9 @@ def handle_plain_text(message):
         message_ = cat_news_maker(category)
         bot.send_message(message.chat.id, message_, reply_markup=markup)
     else:
-        bot.send_message(message.chat.id, 'Чтобы узнать новости, пользуйтесь командами /news или /exchangerate', reply_markup=markup)
+        bot.send_message(message.chat.id, 'Чтобы узнать новости, пользуйтесь командами'
+                         ' /news или /exchangerate для курса валют. Если вас интересует '
+                         'определенная категория выбирайте /category', reply_markup=markup)
     cat = False
 
 if __name__ == '__main__':
