@@ -13,6 +13,17 @@ day = ''
 def handle_start(message):
     bot.send_message(message.chat.id, 'Хочешь немного новостей?')
 
+@bot.message_handler(regexp='cat')
+def handle_cat(message):
+    cat_list = get_cat(make_news_list())
+    markup = types.ReplyKeyboardMarkup(row_width = 1)
+    itembtn = 0
+    print(cat_list)
+    for item in cat_list:
+        itembtn = types.KeyboardButton(item)
+        markup.add(itembtn)
+    bot.send_message(message.chat.id, 'Выберите категорию' ,reply_markup=markup)
+    
 @bot.message_handler(commands=['news'])
 def handle_news(message):
     #markup = types.ForceReply(selective=False)
