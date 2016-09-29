@@ -20,3 +20,13 @@ def exchange_rates_message_maker():#making exchange rates message
         message = 'Что-то пошло не так, попробуйте позже'
     return message
     
+def cat_news_maker(category):
+    news = make_news_list()
+    cat_news = []
+    message = 'Главные события на этот час в категории %s: \n \n' % category
+    for item in news:
+        if item['category'] == category:
+            cat_news.append(item)
+    for i in range(len(cat_news)):
+        message += '%s. %s \n (%s) \n \n' % (i + 1, cat_news[i]['title'], cat_news[i]['link'])
+    return message 
