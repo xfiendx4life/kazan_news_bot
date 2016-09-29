@@ -32,6 +32,13 @@ def make_news_list():
             news.append(news_dict)
     return news
 
+def get_cat(news):
+    cat_list = []
+    for item in news:
+        if item['category'] not in cat_list:
+            cat_list.append(item['category'])
+    return cat_list
+
 def get_valCodes(root): #returns list of currency codes from cbr.ru
     code_list = {}
     for item in root:
