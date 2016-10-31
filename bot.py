@@ -3,7 +3,8 @@ import config
 import telebot
 from telebot import types
 import os
-from newsmaker import * 
+from newsmaker import *
+import time
 
 bot = telebot.TeleBot(config.token)
 day = ''
@@ -18,7 +19,7 @@ def handle_cat(message):
     cat_list = get_cat(make_news_list())
     markup = types.ReplyKeyboardMarkup(row_width = 1)
     itembtn = 0
-    print(cat_list)
+    #print(cat_list)
     for item in cat_list:
         itembtn = types.KeyboardButton(item)
         markup.add(itembtn)
@@ -51,11 +52,16 @@ def handle_plain_text(message):
         bot.send_message(message.chat.id, 'Чтобы узнать новости, пользуйтесь командами'
                          ' /news или /exchangerate для курса валют. Если вас интересует '
                          'определенная категория выбирайте /category', reply_markup=markup)
+        print(str(message.chat.id))
     cat = False
 
 if __name__ == '__main__':
-    try:
-        bot.polling(none_stop=True)
-    except:
-        os.startfile('bot.py')
-        print("Here's an ERROR")
+    x = 0
+    while True:
+        try:
+            time.sleep(x)
+            bot.polling(none_stop=True)
+            x = 0
+        except Exception as e:
+            bot.send_message('43037893', str(e))
+            x += 1

@@ -2,10 +2,19 @@
 import requests
 import xml.etree.ElementTree as ET
 from datetime import datetime, timedelta
+import time
 
 def get_xml(url, encoding, payload=""):
-    r = requests.get(url, params = payload)
-    r.encoding = encoding
+    x = 0
+    e = ' '
+    while e:
+        try:
+            r = requests.post(url, params = payload)
+            r.encoding = encoding
+            e = None
+        except Exception as e:
+            time.sleep(x)
+            print(sys.exc_info()[0])
     return r.text
 
 def parse_xml(text):
@@ -67,6 +76,8 @@ def get_ValCurs(): #returns tuple (us_rate, eu_rate)
     day = datetime.now()
     if day.weekday() == 6:
         day -= timedelta(days=1)
+    elif day.weekday() == 0:
+        day -= timedelta(days=2)
     day = datetime.strftime(day, "%d.%m.%Y")
     return get_rate(day, codes['US Dollar'],'USD' ), get_rate(day, codes['EURO'], 'EUR')
     
